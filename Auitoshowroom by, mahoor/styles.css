@@ -1,0 +1,299 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #f0f0f0;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 6px;
+  }
+  .navbar {
+    background: linear-gradient(to right, #0f0f0f, #1b1b1b);
+    padding: 1.5rem 2rem;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+  }
+  
+  .navbar-brand {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #ffffff !important;
+  }
+  
+  .nav-link {
+    font-size: 1.2rem;
+    color: #ddd !important;
+    transition: 0.3s;
+    margin-left: 1rem;
+  }
+  
+  .nav-link:hover {
+    color: #ff5555 !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+  }
+  
+
+  .hero-section {
+    background: url('wallpaperflare.com_wallpaper (49).jpg') center/cover no-repeat;
+    height: 88vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0 15px;
+    position: relative;
+  }
+  
+  .hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to top, #111, transparent);
+  }
+
+  .hero-section h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    z-index: 2;
+  }
+  
+  .hero-section p {
+    font-size: 1.5rem;
+    z-index: 2;
+    opacity: 0.9;
+  }
+  #cars .col-md-3 {
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  }
+  select.form-select {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #2c2c2c;
+    color: #fff;
+    border: none;
+  }  
+  #carGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .car-card {
+    background-color: #111;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    aspect-ratio: 3.3/3;
+  }
+  .car-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(255, 255, 255, 0.2);
+  }
+  .car-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .car-card .card-body {
+    padding: 15px;
+  }  
+  
+  .car-info {
+    padding: 15px;
+  }
+  
+  .car-info h5 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .car-info p {
+    margin-top: 5px;
+    color: #aaa;
+    font-size: 0.95rem;
+  }
+  .btn-primary,
+  .btn-success {
+    border-radius: 30px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0062cc;
+  }
+  
+  .btn-success:hover {
+    background-color: #28a745;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+  .customers,
+  .brands {
+    background-color: #1c1c1c;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+  
+  .customers h3,
+  .brands h3 {
+    color: #000000;
+    margin-bottom: 20px;
+  }
+  footer {
+    background-color: #000;
+    color: #bbb;
+    padding: 60px 0;
+  }
+  
+  footer h5 {
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  
+  footer a {
+    color: #ccc;
+    text-decoration: none;
+  }
+  
+  footer a:hover {
+    color: #00bcd4;
+  }
+  
+  footer input {
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  footer .btn-sm {
+    border-radius: 20px;
+    font-weight: bold;
+    padding: 5px 15px;
+  }
+  .modal-content {
+    border-radius: 12px;
+    background-color: #1c1c1c;
+    color: white;
+  }
+  
+  @media (max-width: 992px) {
+    .car-card {
+      width: calc(50% - 1.5rem);
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .car-card {
+      width: 100%;
+    }
+  }
+  .news-ticker {
+    background-color: #111;
+    color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  
+  .ticker-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .ticker {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: scroll-left 25s linear infinite;
+  }
+  
+  .ticker span {
+    display: inline-block;
+    padding: 0 3rem;
+  }
+  
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  .chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff3c3c;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 999;
+  }
+  
+  .chat-box {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 280px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: none;
+    z-index: 1000;
+  }
+  
+  .chat-header {
+    background-color: #111;
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat-body {
+    padding: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 0.95rem;
+  }
+  

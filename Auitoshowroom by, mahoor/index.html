@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoXpress - New Cars in Pakistan</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#hero">AutoXpress</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#cars">New Cars</a></li>
+        <li class="nav-item"><a class="nav-link" href="#brands">Brands</a></li>
+        <li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#signup">Sign Up</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="hero" class="hero-section">
+  <div class="container">
+    <h1>Find Your Perfect Ride</h1>
+    <p class="lead">Browse and compare the latest car models in Pakistan.</p>
+  </div>
+</section>
+<div class="news-ticker">
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>🚗 Toyota introduces the all-new Hybrid Corolla! </span>
+        <span>🔥 Summer sale: Up to 10% off on all Honda models! </span>
+        <span>📢 New showroom opening in Lahore this weekend! </span>
+        <span>⚡ Electric Kia EV6 now available for booking. </span>
+      </div>
+    </div>
+  </div>
+<section id="cars" class="container my-5">
+    <h2 class="mb-4 text-center">Browse Our Latest Cars</h2>      
+
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="p-4 border rounded bg-dark text-white shadow-sm">
+          <h5 class="mb-3">Filter & Sort</h5>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label for="brandFilter" class="form-label">Brand</label>
+              <select id="brandFilter" class="form-select">
+                <option value="">All Brands</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Honda">Honda</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="Suzuki">Suzuki</option>
+                <option value="Kia">Kia</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="sortSelect" class="form-label">Sort By</label>
+              <select id="sortSelect" class="form-select">
+                <option value="">Default</option>
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="yearDesc">Newest First</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Fuel Type</label>
+              <select class="form-select">
+                <option value="">Any</option>
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Transmission</label>
+              <select class="form-select">
+                <option value="">Any</option>
+                <option value="automatic">Automatic</option>
+                <option value="manual">Manual</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+ 
+    <div class="row" id="carGrid">
+    </div>
+  
+
+    <div id="noResults" class="text-center text-muted mt-5 d-none">
+      <h5>No cars found. Try changing the filter.</h5>
+    </div>
+  </section>
+  
+
+<div class="modal fade" id="buyModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Purchase Car</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p id="selectedCarName"></p>
+        <button class="btn btn-success w-100">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section id="brands" class="py-5 bg-light text-center">
+    <div class="container">
+      <h2 class="mb-4">Our Trusted Brands</h2>
+      <div class="row justify-content-center">
+        <div class="col-6 col-sm-4 col-md-2 mb-3">
+          <img src="pngwing.com.png" class="img-fluid brand-logo" alt="Toyota">
+        </div>
+        <div class="col-6 col-sm-4 col-md-2 mb-3">
+          <img src="pngwing.com (4).png" class="img-fluid brand-logo" alt="Honda">
+        </div>
+        <div class="col-6 col-sm-4 col-md-2 mb-3">
+          <img src="pngwing.com (2).png" class="img-fluid brand-logo" alt="Hyundai">
+        </div>
+        <div class="col-6 col-sm-4 col-md-2 mb-3">
+          <img src="pngwing.com (1).png" class="img-fluid brand-logo" alt="Kia">
+        </div>
+        <div class="col-6 col-sm-4 col-md-2 mb-3">
+          <img src="pngwing.com (3).png" class="img-fluid brand-logo" alt="Suzuki">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<section id="support" class="py-5 text-center bg-white">
+    <div class="container">
+      <h2 class="mb-4">24/7 Customer Support</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-4 mb-3">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5>Live Chat</h5>
+              <p>Get real-time support through our live chat system anytime.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5>Email</h5>
+              <p>Send us an email at support@autoxpress.pk and we’ll reply within hours.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5>Phone Support</h5>
+              <p>Call us on +92-123-4567890 for fast support from our agents.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section id="contact" class="py-5 bg-light text-center">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <p>Email: support@autoxpress.pk | Phone: +92-123-4567890</p>
+  </div>
+</section>
+
+<section id="signup" class="py-5 text-center">
+  <div class="container">
+    <h2>Join Our Newsletter</h2>
+    <p>Get latest updates and offers in your inbox.</p>
+    <form onsubmit="subscribeNewsletter(event)" class="row justify-content-center">
+      <div class="col-md-3">
+        <input type="text" id="nameInput" class="form-control mb-2" placeholder="Your Name" required>
+      </div>
+      <div class="col-md-3">
+        <input type="email" id="emailInput" class="form-control mb-2" placeholder="Your Email" required>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary w-100">Subscribe</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer class="bg-dark text-light pt-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>About AutoXpress</h5>
+        <p>Your trusted platform to discover and purchase brand-new cars in Pakistan.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#cars" class="text-light">Cars</a></li>
+          <li><a href="#brands" class="text-light">Brands</a></li>
+          <li><a href="#support" class="text-light">Support</a></li>
+          <li><a href="#contact" class="text-light">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Newsletter</h5>
+        <form onsubmit="subscribeNewsletter(event)">
+          <input type="email" id="footerEmail" class="form-control mb-2" placeholder="Your Email">
+          <button class="btn btn-primary btn-sm">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-center mt-4">&copy; 2025 AutoXpress. All rights reserved by Mahnoor.</p>
+  </div>
+</footer>
+<div class="chat-widget" onclick="openChatBox()">
+    💬 Chat with us
+  </div>
+  
+  <div class="chat-box" id="chatBox">
+    <div class="chat-header">
+      <span>AutoXpress Support</span>
+      <button onclick="closeChatBox()">✖</button>
+    </div>
+    <div class="chat-body">
+      <p><strong>Bot:</strong> Hi! How can I help you today?</p>
+    </div>
+  </div>
+  
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
