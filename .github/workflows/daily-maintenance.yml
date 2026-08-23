@@ -2,8 +2,8 @@ name: Daily Maintenance
 
 on:
   schedule:
-    # Runs every day at 7:00 PM UTC
-    - cron: "0 19 * * *"
+    # 11:00 PM Pakistan time (UTC+5)
+    - cron: "0 18 * * *"
 
   # Allows manual testing from GitHub
   workflow_dispatch:
@@ -18,39 +18,55 @@ jobs:
 
     steps:
 
+      # Get the repository
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Check for today's commits
+      # Check whether Mahnoor committed today
+      - name: Check Mahnoor's commits
         id: commits
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          COUNT=$(git log \
-            --since="00:00" \
-            --until="23:59" \
-            --oneline | wc -l)
 
-          echo "Today's commits: $COUNT"
+          TODAY=$(TZ=Asia/Karachi date +"%Y-%m-%d")
+          TOMORROW=$(TZ=Asia/Karachi date -d "tomorrow" +"%Y-%m-%d")
+
+          echo "Checking commits for:"
+          echo "$TODAY Pakistan time"
+
+          COUNT=$(curl -s \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/commits?author=Mahnoor-Khizar&since=${TODAY}T00:00:00+05:00&until=${TOMORROW}T00:00:00+05:00&per_page=100" \
+            | jq 'length')
+
+          echo "Mahnoor's commits today: $COUNT"
+
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
 
+      # Update the activity file only if Mahnoor did not commit
       - name: Update activity file
         if: steps.commits.outputs.count == '0'
         run: |
-          DATE=$(date -u +"%Y-%m-%d")
+
+          DATE=$(TZ=Asia/Karachi date +"%Y-%m-%d")
 
           echo "" >> DAILY_ACTIVITY.md
           echo "- $DATE — Automated repository maintenance." >> DAILY_ACTIVITY.md
 
-      - name: Commit changes
+      # Commit the change
+      - name: Create maintenance commit
         if: steps.commits.outputs.count == '0'
         run: |
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add DAILY_ACTIVITY.md
 
-          git commit \
-            -m "chore: daily maintenance"
+          git commit -m "chore: daily maintenance"
 
           git push
