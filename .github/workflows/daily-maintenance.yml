@@ -1,0 +1,56 @@
+name: Daily Maintenance
+
+on:
+  schedule:
+    # Runs every day at 7:00 PM UTC
+    - cron: "0 19 * * *"
+
+  # Allows manual testing from GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-maintenance:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for today's commits
+        id: commits
+        run: |
+          COUNT=$(git log \
+            --since="00:00" \
+            --until="23:59" \
+            --oneline | wc -l)
+
+          echo "Today's commits: $COUNT"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+
+      - name: Update activity file
+        if: steps.commits.outputs.count == '0'
+        run: |
+          DATE=$(date -u +"%Y-%m-%d")
+
+          echo "" >> DAILY_ACTIVITY.md
+          echo "- $DATE — Automated repository maintenance." >> DAILY_ACTIVITY.md
+
+      - name: Commit changes
+        if: steps.commits.outputs.count == '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add DAILY_ACTIVITY.md
+
+          git commit \
+            -m "chore: daily maintenance"
+
+          git push
