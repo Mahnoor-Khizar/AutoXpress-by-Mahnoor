@@ -1,85 +1,76 @@
 
-# AutoXpress Wallpaper Setup
-# The user must run this script and choose whether to enable logon updates.
-
 $ErrorActionPreference = "Stop"
+
 $taskName = "AutoXpress-Wallpaper"
 $folder = Join-Path $env:LOCALAPPDATA "AutoXpress"
-$scriptPath = Join-Path $folder "Set-Wallpaper.ps1"
 $imagePath = Join-Path $folder "wallpaper.jpg"
+$scriptPath = Join-Path $folder "Set-Wallpaper.ps1"
 
-# Public sample wallpaper. Replace with your approved image URL.
 $imageUrl = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=85"
 
-function Set-AutoXpressWallpaper {
-    New-Item -ItemType Directory -Path $folder -Force | Out-Null
+New-Item -ItemType Directory -Path $folder -Force | Out-Null
 
+function Set-AutoXpressWallpaper {
     Invoke-WebRequest -Uri $imageUrl -OutFile $imagePath
 
-    # Confirm the downloaded file is a valid image.
     Add-Type -AssemblyName System.Drawing
-    $image = [System.Drawing.Image]::FromFile($imagePath)
-    $image.Dispose()
-
-    # Apply wallpaper for the current Windows user.
-    Set-ItemProperty `
-        -Path "HKCU:\Control Panel\Desktop" `
-        -Name Wallpaper `
-        -Value $imagePath
+    $img = [System.Drawing.Image]::FromFile($imagePath)
+    $img.Dispose()
 
     Add-Type @"
 using System.Runtime.InteropServices;
-public class WallpaperNative {
-    [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Auto)]
-    public static extern int SystemParametersInfo(
+public class AutoXpressWallpaper {
+    [DllImport("user32.dll", CharSet=CharSet.Auto, SetLastError=true)]
+    public static extern bool SystemParametersInfo(
         int action, int param, string path, int flags
     );
 }
-"@ -ErrorAction SilentlyContinue
+"@
 
-    $result = [WallpaperNative]::SystemParametersInfo(
+    $ok = [AutoXpressWallpaper]::SystemParametersInfo(
         20, 0, $imagePath, 3
     )
 
-    if ($result -eq 0) {
-        throw "Windows could not apply the wallpaper."
+    if (-not $ok) {
+        throw "Windows could not set the wallpaper."
     }
-
-    Write-Host "Wallpaper applied successfully."
 }
 
 try {
     Set-AutoXpressWallpaper
+    Write-Host "Wallpaper applied successfully."
 }
 catch {
-    Write-Host "Wallpaper setup failed: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Could not apply wallpaper: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
 }
 
-$choice = Read-Host "Would you like AutoXpress to apply this wallpaper at every sign-in? Type YES or NO"
+# A scheduled run only applies the wallpaper; it does not ask again.
+if ($args -contains "--logon") {
+    exit 0
+}
 
-if ($choice -eq "YES") {
-    New-Item -ItemType Directory -Path $folder -Force | Out-Null
+$choice = Read-Host "Enable automatic wallpaper changes at sign-in? Type YES to agree"
 
-    # Save this script locally for the scheduled task.
+if ($choice -ceq "YES") {
     Copy-Item -LiteralPath $PSCommandPath -Destination $scriptPath -Force
 
+    $powershell = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
     $action = New-ScheduledTaskAction `
-        -Execute "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" `
-        -Argument "-NoProfile -File `"$scriptPath`" -AutoXpressLogon"
+        -Execute $powershell `
+        -Argument "-NoProfile -File `"$scriptPath`" --logon"
 
-    # The task is created only after the user opts in.
-    $trigger = New-ScheduledTaskTrigger -AtLogOn
+    $trigger = New-ScheduledTaskTrigger -AtLogOn -User "$env:USERDOMAIN\$env:USERNAME"
 
     Register-ScheduledTask `
         -TaskName $taskName `
         -Action $action `
         -Trigger $trigger `
-        -Description "User-approved AutoXpress wallpaper task" `
+        -Description "User-approved AutoXpress wallpaper at sign-in" `
         -Force | Out-Null
 
-    Write-Host "Automatic sign-in task created."
+    Write-Host "Automatic wallpaper task enabled for your account."
 }
 else {
-    Write-Host "Automatic updates were not enabled."
+    Write-Host "Automatic changes were not enabled."
 }
